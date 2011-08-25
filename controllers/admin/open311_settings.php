@@ -1,4 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
+// at the moment this is just an edit of the clickatell controller that needs a lot of revisions.  For open311 implementation one idea for admin settings is to allow users to determine how Ushahidi data will map to open311 data.  See comments in hook file.  
+
 /**
  * Open311 Settings Controller
  *
@@ -13,8 +15,6 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
 * 
 */
-
-// at the moment this is just an edit of the clickatell controller that needs a lot of revisions.  For open311 implementation one idea for admin settings is to allow users to determine how Ushahidi data will map to open311 data.  See comments in hook file.  
 
 class Open311_Settings_Controller extends Admin_Controller
 {

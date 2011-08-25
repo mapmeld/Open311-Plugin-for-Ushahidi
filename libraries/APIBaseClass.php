@@ -1,4 +1,6 @@
 <?php
+// this is one of two library files from code for america's GSoC 2011 project.  library files work to let ushahidi communicate with the open311 api.  Note the other files are for testing the library files work with the given open311 api key. 
+
 class APIBaseClass {
 	public $_root, $_http;
 	

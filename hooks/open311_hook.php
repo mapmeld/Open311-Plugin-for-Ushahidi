@@ -43,6 +43,16 @@ public function _push_report()
 // This report variable is an object that has all the data you need.
 $report = Event::$data;
 }
+
+// this section is used to test output generated from a report.  The output can then be mapped to Open311 inputs and submitted to Open311 API.
+echo '<pre>';
+var_dump($report);
+echo '</pre>';
+
 }
+
+// 
+
+
 
 new open311;
