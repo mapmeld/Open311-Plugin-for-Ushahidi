@@ -27,19 +27,19 @@ class Open311_Settings_Controller extends Admin_Controller
 		$this->template->content->title = "Open311 Settings";
 		
 		// Settings Form View
-		$this->template->content->settings_form = new View("open311/admin/open311_settings");
+		$this->template->content->settings_form = new View("Open311/admin/Open311_settings");
 		
 		// JS Header Stuff
-      //  $this->template->js = new View('open311/admin/open311_settings_js');
+      //  $this->template->js = new View('open311/admin/settings_js');
 		
 		// setup and initialize form field names
         $form = array
         (
-            'open311_api' => '',
-            'open311_username' => '',
-            'open311_password' => ''
+            'api' => '',
+            'username' => '',
+            'password' => ''
         );
-        //  Copy the form as errors, so the errors will be stored with keys
+        //  Copy the form as errors, so the errors will be stored with ids
         //  corresponding to the form field names
         $errors = $form;
         $form_error = FALSE;
@@ -57,18 +57,18 @@ class Open311_Settings_Controller extends Admin_Controller
 
             // Add some rules, the input field, followed by a list of checks, carried out in order
 
-            $post->add_rules('open311_api','required', 'length[4,20]');
-            $post->add_rules('open311_username', 'required', 'length[3,50]');
-            $post->add_rules('open311_password', 'required', 'length[5,50]');
+            $post->add_rules('api','required', 'length[4,20]');
+            $post->add_rules('username', 'required', 'length[3,50]');
+            $post->add_rules('password', 'required', 'length[5,50]');
 
             // Test to see if things passed the rule checks
             if ($post->validate())
             {
                 // Yes! everything is valid
                 $open311 = new Open311_Model(1);
-                $open311->open311_api = $post->open311_api;
-                $open311->open311_username = $post->open311_username;
-                $open311->open311_password = $post->open311_password;
+                $open311->api = $post->api;
+                $open311->username = $post->username;
+                $open311->password = $post->password;
                 $open311->save();
 
                 // Everything is A-Okay!
@@ -98,9 +98,9 @@ class Open311_Settings_Controller extends Admin_Controller
 
             $form = array
             (
-                'open311_api' => $open311->open311_api,
-                'open311_username' => $open311->open311_username,
-                'open311_password' => $open311->open311_password
+                'api' => $open311->api,
+                'username' => $open311->username,
+                'password' => $open311->password
             );
         }
 		
@@ -108,22 +108,22 @@ class Open311_Settings_Controller extends Admin_Controller
 		$this->template->content->settings_form->form = $form;
 		
 		
-		// Do we have a frontlineSMS Key? If not create and save one on the fly
+		// Do we have a frontlineSMS id? If not create and save one on the fly
         $open311 = ORM::factory('open311', 1);
 		
-		if ($open311->loaded AND $open311->open311_key)
+		if ($open311->loaded AND $open311->id)
 		{
-			$open311_key = $open311->open311_key;
+			$id = $open311->id;
 		}
 		else
 		{
-			$open311_key = strtoupper(text::random('alnum',8));
-            $open311->open311_key = $open311_key;
+			$id = strtoupper(text::random('alnum',8));
+            $open311->id = $id;
             $open311->save();
 		}
 
-		$this->template->content->settings_form->open311_key = $open311_key;
-		$this->template->content->settings_form->open311_link = url::site()."open311/index/".$open311_key;
+		$this->template->content->settings_form->id = $id;
+		$this->template->content->settings_form->link = url::site()."open311/index/".$id;
 		
 		// Other variables
 	    $this->template->content->errors = $errors;
@@ -142,14 +142,14 @@ class Open311_Settings_Controller extends Admin_Controller
         $open311 = ORM::factory("open311")->find(1);
         if ($open311->loaded)
 		{
-            $open311_api = $open311->open311_api;
-            $open311_username = $open311->open311_username;
-            $open311_password = $open311->open311_password;
+            $api = $open311->api;
+            $username = $open311->username;
+            $password = $open311->password;
 
-            $testsms = new Open311_API();
-            $testsms->api_id = $open311_api;
-            $testsms->user = $open311_username;
-            $testsms->password = $open311_password;
+            $testsms = new API();
+            $testsms->api_id = $api;
+            $testsms->user = $username;
+            $testsms->password = $password;
             $testsms->use_ssl = false;
             $testsms->sms();
             // echo $mysms->session;
