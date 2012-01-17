@@ -718,7 +718,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 					//array(
 						"service_request_id" => $item->incident_id,
 						//"incidenttitle" => $item->incident_title,
-						"description" => $item->incident_title . $item->incident_description,
+						"description" => $item->incident_title . ' - ' . $item->incident_description,
 						"requested_datetime" => $item->incident_date,
 						//"incidentmode" => $item->incident_mode,
 						//"incidentactive" => $item->incident_active,
@@ -739,7 +739,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 		$data = array(
 			"payload" => array(
 				"domain" => $this->domain,
-				"incidents" => $json_reports
+				"service_requests" => $json_reports
 			),
 			"error" => $this->api_service->get_error_msg(0)
 		);
