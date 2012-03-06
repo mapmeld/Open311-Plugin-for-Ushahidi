@@ -16,11 +16,8 @@ class Reports extends Controller {
 	function index()
 	{
 		$data['query'] = $this->db->get('georeport_reports');
-		
 		$this->load->view('reports_xml', $data);
 	}
-	
-	
 	
 	
 
@@ -103,15 +100,14 @@ class Reports extends Controller {
 		$this->db->join('form', 'form.id = incident.form_id', 'left');		
 		$this->db->join('location', 'location.id = incident.location_id', 'left');
 
-		/*
-		$this->db->from('incident_category');		
+		$this->db->join('media', 'media.incident_id = incident.id');
+		
+		//$this->db->from('incident_category');		
+		//$this->db->join('category', 'incident_category.incident_id = incident.id');		
 
-		$this->db->join('category', 'incident_category.category_id = category.id');
-		$this->db->join('incident', 'incident_category.incident_id = incident.id');		
-		$this->db->join('location', 'location.id = incident.location_id');
-		*/
-
-
+		//$this->db->join('category', 'incident_category.category_id = category.id');
+		//$this->db->join('location', 'location.id = incident.location_id');
+		//$this->db->join('category', 'category.incident_id = incident.id');
 		
 		// filter the query by each parameter
 		if (!empty($_GET['status'])) {
@@ -132,9 +128,7 @@ class Reports extends Controller {
 			$this->db->where('incident.incident_date <=', $end_date);									
 		}	
 		
-		$data['query'] = $this->db->get();		
-		
-		// echo $this->db->last_query();
+		$data['query'] = $this->db->get();
 		
  		switch ($format) {
 			case "xml":
@@ -159,7 +153,6 @@ class Reports extends Controller {
 	
 		$this->db->where('incident.id', $report_id);						
 		$data['query'] = $this->db->get();
-
 		
 		$this->load->view('reports_xml', $data);
 	}	

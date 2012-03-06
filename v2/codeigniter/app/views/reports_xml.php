@@ -41,6 +41,15 @@ xml_add_child($request, 'title', $row->incident_title);
 xml_add_child($request, 'verified', $row->incident_verified);
 xml_add_child($request, 'active', $row->incident_active);
 
+if( strpos( $row->media_link, '/') == FALSE){
+	xml_add_child($request, 'media_url', 'http://ushahidi.phpfogapp.com/media/uploads/' . $row->media_link);
+}
+else{
+	xml_add_child($request, 'media_url', $row->media_link);
+}
+
+xml_add_child($request, 'category_name', $row->category_id);
+
 
 }
 
