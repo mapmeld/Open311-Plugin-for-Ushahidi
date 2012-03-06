@@ -1,6 +1,6 @@
 <?php 
 
-// file from p.ashlock as example view file for v1 of open311.  can be modified for v2.
+
 $this->load->helper('xml');
 $dom = xml_dom();
 $requests = xml_add_child($dom, 'service_requests');
@@ -25,7 +25,7 @@ xml_add_child($request, 'status', $status);
 xml_add_child($request, 'status_notes', '');
 xml_add_child($request, 'service_name', $row->form_title);
 xml_add_child($request, 'service_code', $row->form_id);
-xml_add_child($request, 'description', $row->incident_description);
+xml_add_child($request, 'description', $row->incident_title . ' - ' . $row->incident_description);
 xml_add_child($request, 'agency_responsible', '');
 xml_add_child($request, 'service_notice', '');
 xml_add_child($request, 'requested_datetime', dateformat($row->incident_date));
@@ -37,13 +37,25 @@ xml_add_child($request, 'zipcode', '');
 xml_add_child($request, 'lat', $row->latitude);
 xml_add_child($request, 'long', $row->longitude);
 
+xml_add_child($request, 'title', $row->incident_title);
+xml_add_child($request, 'verified', $row->incident_verified);
+xml_add_child($request, 'active', $row->incident_active);
+
+if( strpos( $row->media_link, '/') == FALSE){
+	xml_add_child($request, 'media_url', 'http://ushahidi.phpfogapp.com/media/uploads/' . $row->media_link);
+}
+else{
+	xml_add_child($request, 'media_url', $row->media_link);
+}
+
+//xml_add_child($request, 'category_name', $row->category_id);
+
 
 }
 
 xml_print($dom);
 
 ?>
-
 
 
 
