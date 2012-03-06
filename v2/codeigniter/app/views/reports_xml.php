@@ -48,7 +48,7 @@ else{
 	xml_add_child($request, 'media_url', $row->media_link);
 }
 
-xml_add_child($request, 'category_name', $row->category_id);
+//xml_add_child($request, 'category_name', $row->category_id);
 
 
 }
