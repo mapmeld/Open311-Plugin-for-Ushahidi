@@ -100,7 +100,7 @@ class Reports extends Controller {
 		$this->db->join('form', 'form.id = incident.form_id', 'left');		
 		$this->db->join('location', 'location.id = incident.location_id', 'left');
 
-		$this->db->join('media', 'media.incident_id = incident.id');
+		$this->db->join('media', 'media.incident_id = incident.id', 'left');
 		
 		//$this->db->from('incident_category');		
 		//$this->db->join('category', 'incident_category.incident_id = incident.id');		
